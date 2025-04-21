@@ -1,13 +1,13 @@
-# GaragePro PicPay Plugin
+# GaragePro Mercado Pago Plugin
 
 ## Descrição
-O **GaragePro PicPay** é um plugin para WordPress que integra o sistema de pagamentos do PicPay, permitindo a criação e gestão de cobranças, controle de inadimplência e integração com membros de um site. Ele também facilita a comunicação com APIs externas e oferece endpoints REST API para consumo por aplicações externas, como Next.js.
+O **GaragePro Mercado Pago** é um plugin para WordPress que integra o sistema de pagamentos do Mercado Pago, permitindo a criação e gestão de cobranças, controle de inadimplência e integração com membros do site.
 
 ---
 
 ## Funcionalidades
-- **Gestão de Cobranças**: Criação, atualização e consulta de cobranças via API do PicPay.
-- **Webhooks**: Manipulação de notificações de pagamento do PicPay.
+- **Gestão de Cobranças**: Criação, atualização e consulta de cobranças via API do Mercado Pago.
+- **Webhooks**: Manipulação de notificações de pagamento do Mercado Pago.
 - **Controle de Acesso**: Restringe acesso a páginas para usuários inadimplentes.
 - **Gestão de Membros**: Registro, login e edição de dados de usuários.
 - **Integração com ACF (Advanced Custom Fields)**: Popula campos personalizados com dados do usuário.
@@ -20,7 +20,7 @@ O **GaragePro PicPay** é um plugin para WordPress que integra o sistema de paga
 
 1. Faça o upload da pasta do plugin para o diretório `wp-content/plugins` do seu site WordPress.
 2. Ative o plugin no painel administrativo do WordPress.
-3. Configure o arquivo `config.php` com o token da API do PicPay e URLs apropriadas.
+3. Configure o arquivo `config.php` com o token da API do Mercado Pago e URLs apropriadas.
 
 ---
 
@@ -28,7 +28,7 @@ O **GaragePro PicPay** é um plugin para WordPress que integra o sistema de paga
 
 O arquivo `config.php` contém as configurações centrais do plugin:
 
-- **`picpay_token`**: O token de autenticação da API do PicPay.
+- **`mercadopago_access_token`**: O token de autenticação da API do Mercado Pago.
 - **`callback_url`**: Endpoint para notificações de pagamento (webhook).
 - **`return_url`**: Página para redirecionar usuários após o pagamento.
 - **`log_enabled`**: Ativa ou desativa o registro de logs.
@@ -45,19 +45,19 @@ O arquivo `config.php` contém as configurações centrais do plugin:
 
 ## Endpoints REST API
 
-### 1. Webhook do PicPay
-**URL**: `/wp-json/garagepro-picpay/v1/webhook`  
+### 1. Webhook do Mercado Pago
+**URL**: `/wp-json/garagepro-mercadopago/v1/webhook`  
 **Método**: POST  
-**Descrição**: Manipula notificações enviadas pelo PicPay para atualizar o status de cobranças.
+**Descrição**: Manipula notificações enviadas pelo Mercado Pago para atualizar o status de cobranças.
 
 ### 2. Listar Cobranças de um Usuário
-**URL**: `/wp-json/garagepro-picpay/v1/cobrancas/{user_id}`  
+**URL**: `/wp-json/garagepro-mercadopago/v1/cobrancas/{user_id}`  
 **Método**: GET  
 **Descrição**: Retorna todas as cobranças associadas a um usuário.  
 **Autenticação**: Obrigatório enviar um token no cabeçalho `Authorization`.
 
 ### 3. Criar Cobrança
-**URL**: `/wp-json/garagepro-picpay/v1/cobrancas`  
+**URL**: `/wp-json/garagepro-mercadopago/v1/cobrancas`  
 **Método**: POST  
 **Body**:
 ```json
@@ -75,9 +75,9 @@ O arquivo `config.php` contém as configurações centrais do plugin:
 
 ## Diretórios e Arquivos
 
-- **`garagepro-picpay.php`**: Arquivo principal do plugin.
+- **`garagepro-mercadopago.php`**: Arquivo principal do plugin.
 - **`/includes`**:
-  - `api-picpay.php`: Integração com a API do PicPay.
+  - `api-mercadopago.php`: Integração com a API do Mercado Pago.
   - `cobrancas.php`: Gestão de cobranças.
   - `webhook-handler.php`: Manipulação de webhooks.
   - `controle-acesso.php`: Controle de acesso para inadimplentes.
@@ -86,7 +86,7 @@ O arquivo `config.php` contém as configurações centrais do plugin:
   - `config.php`: Configurações do plugin.
   - `helper-functions.php`: Funções utilitárias.
 - **`/logs`**:
-  - `garagepro-picpay.log`: Arquivo de logs.
+  - `garagepro-mercadopago.log`: Arquivo de logs.
 
 ---
 

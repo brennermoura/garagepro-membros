@@ -1,4 +1,10 @@
-# Changelog - GaragePro PicPay Plugin
+# Changelog - GaragePro Mercado Pago Plugin
+
+## [1.1.0] - 2025-04-21
+### Alterado
+- Substituída a integração com o PicPay pela integração com o Mercado Pago.
+- Atualização dos endpoints REST API para usar a API do Mercado Pago.
+- Adicionado suporte para autenticação e configuração do token do Mercado Pago.
 
 ## [1.0.0] - 2025-04-20
 ### Adicionado
