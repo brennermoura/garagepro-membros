@@ -58,6 +58,37 @@ function garagepro_create_cobranca($referenceId, $userId, $value, $status = 'pen
         ],
     ]);
 
+    // Integração Mercado Pago (modo teste)
+    $access_token = 'TEST-2442597998385682-042108-ccc1ce561bc5beb217092a7e7b1721a7-2397809037';
+
+    $body = [
+        "transaction_amount" => (float) $value,
+        "description" => "Cobrança #$referenceId",
+        "payment_method_id" => "pix",
+        "payer" => [
+            "email" => "cliente_simulado@email.com",
+            "first_name" => "Cliente",
+            "last_name" => "Simulado"
+        ],
+        "external_reference" => $referenceId,
+    ];
+
+    $response = wp_remote_post('https://api.mercadopago.com/v1/payments', [
+        'method' => 'POST',
+        'headers' => [
+            'Authorization' => 'Bearer ' . $access_token,
+            'Content-Type'  => 'application/json'
+        ],
+        'body' => json_encode($body),
+    ]);
+
+    if (!is_wp_error($response)) {
+        $body = json_decode(wp_remote_retrieve_body($response), true);
+        if (isset($body['point_of_interaction']['transaction_data']['ticket_url'])) {
+            update_post_meta($post_id, 'payment_url', $body['point_of_interaction']['transaction_data']['ticket_url']);
+        }
+    }
+
     return $post_id;
 }
 
@@ -107,6 +138,7 @@ function garagepro_get_user_cobrancas($userId) {
                 'reference_id' => get_post_meta($post->ID, 'reference_id', true),
                 'value' => get_post_meta($post->ID, 'value', true),
                 'status' => get_post_meta($post->ID, 'status', true),
+                'payment_url' => get_post_meta($post->ID, 'payment_url', true),
             ];
         }
     }
